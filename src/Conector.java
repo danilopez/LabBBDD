@@ -67,9 +67,20 @@ public class Conector {
         	Document doc = docBuilder.parse(file);
         	doc.getDocumentElement().normalize();
         	System.out.println("Root element: " + doc.getDocumentElement().getNodeName());
+        	NodeList nodeLst = doc.getElementsByTagName("table");
+        	for (int s = 0; s < nodeLst.getLength(); s++) {
+        		// Estamos dentro de una tabla
+        		Node fstNode = nodeLst.item(s);
+        		if (fstNode.getNodeType() == Node.ELEMENT_NODE) {
+        			Element fstElmnt = (Element) fstNode;
+        		      NodeList fstNmElmntLst = fstElmnt.getElementsByTagName("name");
+        		      Element fstNmElmnt = (Element) fstNmElmntLst.item(0);
+        		      NodeList fstNm = fstNmElmnt.getChildNodes();
+        		      System.out.println("Table name: "  + ((Node) fstNm.item(0)).getNodeValue());
+        		}
+        	}
         } catch (Exception e) {
-        	e.printStackTrace();
-        	
+        	e.printStackTrace();	
         }
     }
     
