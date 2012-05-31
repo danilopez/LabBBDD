@@ -58,9 +58,9 @@ public class Conector {
     
     public static void main(String [] args) throws SQLException {
         Conector c = new Conector("jdbc:oracle:thin:@olimpia.lcc.uma.es:1521:edgar", "LBD12_76638576", "4238");
-/*	List<List<Object>> resultado = c.consulta("SELECT * FROM USER_TABLES");
-	Object o = resultado.get(0).get(0);
-	System.out.println(o.getClass());*/
+        /*	List<List<Object>> resultado = c.consulta("SELECT * FROM USER_TABLES");
+		Object o = resultado.get(0).get(0);
+		System.out.println(o.getClass());*/
         try {
         	DocumentBuilder docBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
         	File file = new File("file.xml");

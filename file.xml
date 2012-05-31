@@ -26,6 +26,7 @@
 				<column>NUMERO</column>
 			</pk_members>
 		</constraint>
+	</table>
 	<table idtab="2">
 		<name>DEPARTAMENTOS</name>
 		<column idcol="21">
@@ -86,6 +87,7 @@
 					</references>
 				</fk_members>
 		</constraint>
+	</table>
 	<table idtab="3">
 		<name>EMPLEADOS</name>
 		<column idcol="31">
@@ -154,6 +156,7 @@
 					</references>
 				</fk_members>
 		</constraint>
+	</table>
 	<table idtab="4">
 		<name>VISITAR</name>
 		<column idcol="41">
@@ -191,18 +194,22 @@
 					</references>
 				</fk_members>
 		</constraint>
+	</table>
 	<table idtab="5">
 		<name>PRUEBAS</name>
 		<column idcol="51">
 			<name>XML</name>
 			<data_type>CLOB</data_type>
 		</column>
+	
+	</table>
 	<table idtab="6">
 		<name>NUEVA_TABLA</name>
 		<column idcol="61">
 			<name>XML</name>
 			<data_type>CLOB</data_type>
 		</column>
+	</table>
 	<table idtab="7">
 		<name>OTRAS_PRUEBAS</name>
 		<column idcol="71">
@@ -220,6 +227,7 @@
 				<column>NOMBRE</column>
 			</pk_members>
 		</constraint>
+	</table>
 	<table idtab="8">
 		<name>MAS_PRUEBAS</name>
 		<column idcol="81">
@@ -251,4 +259,5 @@
 					</references>
 				</fk_members>
 		</constraint>
+	</table>
 </scheme>
