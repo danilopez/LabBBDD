@@ -4,6 +4,10 @@ import java.sql.*;
 import java.util.*;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.DocumentBuilder;
+import javax.xml.xpath.XPath;
+import javax.xml.xpath.XPathConstants;
+import javax.xml.xpath.XPathFactory;
+
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -67,21 +71,38 @@ public class Conector {
         	Document doc = docBuilder.parse(file);
         	doc.getDocumentElement().normalize();
         	System.out.println("Root element: " + doc.getDocumentElement().getNodeName());
-        	NodeList nodeLst = doc.getElementsByTagName("table");
-        	for (int s = 0; s < nodeLst.getLength(); s++) {
-        		// Estamos dentro de una tabla
-        		Node fstNode = nodeLst.item(s);
-        		if (fstNode.getNodeType() == Node.ELEMENT_NODE) {
-        			Element fstElmnt = (Element) fstNode;
-        		      NodeList fstNmElmntLst = fstElmnt.getElementsByTagName("name");
-        		      Element fstNmElmnt = (Element) fstNmElmntLst.item(0);
-        		      NodeList fstNm = fstNmElmnt.getChildNodes();
-        		      System.out.println("Table name: "  + ((Node) fstNm.item(0)).getNodeValue());
+        	
+        	NodeList tableNodeList = doc.getElementsByTagName("table");
+        	for (int i = 0; i < tableNodeList.getLength(); i++) {
+        		// Recorremos la lista de nodos "table" que hayamos encontrado
+        		Node tableNode = tableNodeList.item(i);
+        		// Creamos un nuevo nodo con el elemento a obtener datos
+        		if (tableNode.getNodeType() == Node.ELEMENT_NODE) {
+        			// Confirmamos que el nodo es un elemento simple
+        			Element nameElement = (Element) tableNode;
+        			// Transformamos el nodo en elementos
+        			System.out.println("Table name: " + getTagValue("name",nameElement));
         		}
+        		XPath xpath = XPathFactory.newInstance().newXPath();
+        		NodeList nodeListColumn = (NodeList) xpath.evaluate("column/name",tableNode,XPathConstants.NODESET);
+        		for (int j = 0; j < nodeListColumn.getLength(); j++) {
+        			Node columnNode = nodeListColumn.item(j);
+        			if (columnNode.getNodeType() == Node.ELEMENT_NODE) {
+        				Element el = (Element) columnNode;
+        				System.out.println("\tColumn name: " + el.getChildNodes().item(0).getNodeValue());
+        			}
+        		}
+        		
         	}
         } catch (Exception e) {
         	e.printStackTrace();	
         }
     }
     
+    private static String getTagValue(String stringTag, Element element) {
+    	NodeList nodeList = element.getElementsByTagName(stringTag).item(0).getChildNodes();
+    	Node nodeValue = (Node) nodeList.item(0);
+    	
+    	return nodeValue.getNodeValue();
+    }
 }
