@@ -84,12 +84,12 @@ public class Conector {
         			System.out.println("Table name: " + getTagValue("name",nameElement));
         		}
         		XPath xpath = XPathFactory.newInstance().newXPath();
-        		NodeList nodeListColumn = (NodeList) xpath.evaluate("column/name",tableNode,XPathConstants.NODESET);
+        		NodeList nodeListColumn = (NodeList) xpath.evaluate("column",tableNode,XPathConstants.NODESET);
         		for (int j = 0; j < nodeListColumn.getLength(); j++) {
         			Node columnNode = nodeListColumn.item(j);
         			if (columnNode.getNodeType() == Node.ELEMENT_NODE) {
         				Element el = (Element) columnNode;
-        				System.out.println("\tColumn name: " + el.getChildNodes().item(0).getNodeValue());
+        				System.out.println("\tColumn name: " + getTagValue("name",el));
         			}
         		}
         		
