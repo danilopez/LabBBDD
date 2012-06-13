@@ -232,7 +232,7 @@
 		<name>MAS_PRUEBAS</name>
 		<column idcol="81">
 			<name>PK</name>
-			<data_type>NUMBER(,)</data_type>
+			<data_type>NUMBER</data_type>
 		</column>
 		<column idcol="82">
 			<name>A_OTRAS_PRUEBAS</name>
