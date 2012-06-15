@@ -8,7 +8,7 @@ public class Principal {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-    	File file = new File("file.xml");
+    	File file = new File("xml_data.xml");
     	// TODO: validar XML
     	try {
 			XmlParser xmlParser = new XmlParser(file);

@@ -251,7 +251,7 @@
 		<constraint idcons="FK">
 			<type>R</type>
 				<fk_members>
-					<column>A_OTRAS_PRUEBAS</column>
+				  <column>A_OTRAS_PRUEBAS</column>
 					<column>OTRO_NOMBRE</column>
 					<references>
 						<ref_table_name>OTRAS_PRUEBAS</ref_table_name>
