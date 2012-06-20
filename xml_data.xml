@@ -1,0 +1,310 @@
+<?xml-stylesheet type="text/xsl" href="dbtoxml.xsl"?>
+
+<db_schema 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xsi:noNamespaceSchemaLocation="dbtoxml.xsd">
+
+	<table idtab="1">
+		<name>XML_SCHEMA</name>
+		<column idcol="11">
+			<name>XML</name>
+			<data_type>CLOB</data_type>
+			<nullable>Y</nullable>
+		</column>
+	</table>
+
+	<table idtab="2">
+		<name>PRUEBAS</name>
+		<column idcol="21">
+			<name>XML</name>
+			<data_type>CLOB</data_type>
+			<nullable>Y</nullable>
+		</column>
+	</table>
+
+	<table idtab="3">
+		<name>CENTROS</name>
+		<column idcol="31">
+			<name>NUMERO</name>
+			<data_type>NUMBER</data_type>
+			<nullable>N</nullable>
+		</column>
+		<column idcol="32">
+			<name>NOMBRE</name>
+			<data_type>VARCHAR2(30)</data_type>
+			<nullable>N</nullable>
+		</column>
+		<column idcol="33">
+			<name>DIRECCION</name>
+			<data_type>VARCHAR2(50)</data_type>
+			<nullable>Y</nullable>
+		</column>
+		<constraint idcons="XML_SYS_C0048897">
+			<type>C</type>
+			<search_condition>"NOMBRE" IS NOT NULL</search_condition>
+		</constraint>
+		<constraint idcons="XML_SYS_C0048898">
+			<type>P</type>
+			<pk_members>
+				<column position="1"><name>NUMERO</name></column>
+			</pk_members>
+		</constraint>
+	</table>
+
+	<table idtab="4">
+		<name>DEPARTAMENTOS</name>
+		<column idcol="41">
+			<name>NUMERO</name>
+			<data_type>NUMBER</data_type>
+			<nullable>N</nullable>
+		</column>
+		<column idcol="42">
+			<name>CENTRO</name>
+			<data_type>NUMBER</data_type>
+			<nullable>Y</nullable>
+		</column>
+		<column idcol="43">
+			<name>DIRECCION</name>
+			<data_type>NUMBER</data_type>
+			<nullable>Y</nullable>
+		</column>
+		<column idcol="44">
+			<name>TIPO_DIR</name>
+			<data_type>CHAR</data_type>
+			<nullable>Y</nullable>
+		</column>
+		<column idcol="45">
+			<name>PRESUPUESTO</name>
+			<data_type>NUMBER</data_type>
+			<nullable>Y</nullable>
+		</column>
+		<column idcol="46">
+			<name>DEPTO_JEFE</name>
+			<data_type>NUMBER</data_type>
+			<nullable>Y</nullable>
+		</column>
+		<column idcol="47">
+			<name>NOMBRE</name>
+			<data_type>VARCHAR2(20)</data_type>
+			<nullable>Y</nullable>
+		</column>
+		<constraint idcons="XML_SYS_C0048899">
+			<type>C</type>
+			<search_condition>TIPO_DIR IN ('P','F')</search_condition>
+		</constraint>
+		<constraint idcons="XML_SYS_C0048900">
+			<type>P</type>
+			<pk_members>
+				<column position="1"><name>NUMERO</name></column>
+			</pk_members>
+		</constraint>
+		<constraint idcons="XML_SYS_C0048901">
+			<type>R</type>
+			<fk_members>
+				<column position="1"><name>CENTRO</name></column>
+				<references>
+					<ref_table_name>CENTROS</ref_table_name>
+					<ref_constraint>XML_SYS_C0048898</ref_constraint>
+				</references>
+			</fk_members>
+		</constraint>
+		<constraint idcons="JERARQUIA_DPTOS">
+			<type>R</type>
+			<fk_members>
+				<column position="1"><name>DEPTO_JEFE</name></column>
+				<references>
+					<ref_table_name>DEPARTAMENTOS</ref_table_name>
+					<ref_constraint>XML_SYS_C0048900</ref_constraint>
+				</references>
+			</fk_members>
+		</constraint>
+	</table>
+
+	<table idtab="5">
+		<name>EMPLEADOS</name>
+		<column idcol="51">
+			<name>NUMERO</name>
+			<data_type>NUMBER</data_type>
+			<nullable>N</nullable>
+		</column>
+		<column idcol="52">
+			<name>DEPARTAMENTO</name>
+			<data_type>NUMBER</data_type>
+			<nullable>Y</nullable>
+		</column>
+		<column idcol="53">
+			<name>TELEFONO</name>
+			<data_type>NUMBER</data_type>
+			<nullable>Y</nullable>
+		</column>
+		<column idcol="54">
+			<name>FECHA_NACIMIENTO</name>
+			<data_type>DATE</data_type>
+			<nullable>Y</nullable>
+		</column>
+		<column idcol="55">
+			<name>FECHA_INGRESO</name>
+			<data_type>DATE</data_type>
+			<nullable>Y</nullable>
+		</column>
+		<column idcol="56">
+			<name>SALARIO</name>
+			<data_type>NUMBER</data_type>
+			<nullable>Y</nullable>
+		</column>
+		<column idcol="57">
+			<name>COMISION</name>
+			<data_type>NUMBER</data_type>
+			<nullable>Y</nullable>
+		</column>
+		<column idcol="58">
+			<name>NUM_HIJOS</name>
+			<data_type>NUMBER</data_type>
+			<nullable>Y</nullable>
+		</column>
+		<column idcol="59">
+			<name>NOMBRE</name>
+			<data_type>VARCHAR2(20)</data_type>
+			<nullable>N</nullable>
+		</column>
+		<column idcol="60">
+			<name>DNI</name>
+			<data_type>NUMBER</data_type>
+			<nullable>Y</nullable>
+		</column>
+		<constraint idcons="XML_SYS_C0048903">
+			<type>C</type>
+			<search_condition>"NOMBRE" IS NOT NULL</search_condition>
+		</constraint>
+		<constraint idcons="XML_SYS_C0048904">
+			<type>P</type>
+			<pk_members>
+				<column position="1"><name>NUMERO</name></column>
+			</pk_members>
+		</constraint>
+		<constraint idcons="XML_SYS_C0048905">
+			<type>U</type>
+			<unique_members>
+				<column position="1"><name>DNI</name></column>
+			</unique_members>
+		</constraint>
+		<constraint idcons="XML_SYS_C0048906">
+			<type>R</type>
+			<fk_members>
+				<column position="1"><name>DEPARTAMENTO</name></column>
+				<references>
+					<ref_table_name>DEPARTAMENTOS</ref_table_name>
+					<ref_constraint>XML_SYS_C0048900</ref_constraint>
+				</references>
+			</fk_members>
+		</constraint>
+	</table>
+
+	<table idtab="6">
+		<name>VISITAR</name>
+		<column idcol="61">
+			<name>EMPLEADO</name>
+			<data_type>NUMBER</data_type>
+			<nullable>N</nullable>
+		</column>
+		<column idcol="62">
+			<name>DEPARTAMENTO</name>
+			<data_type>NUMBER</data_type>
+			<nullable>N</nullable>
+		</column>
+		<constraint idcons="XML_SYS_C0048907">
+			<type>P</type>
+			<pk_members>
+				<column position="1"><name>EMPLEADO</name></column>
+				<column position="2"><name>DEPARTAMENTO</name></column>
+			</pk_members>
+		</constraint>
+		<constraint idcons="XML_SYS_C0048908">
+			<type>R</type>
+			<fk_members>
+				<column position="1"><name>EMPLEADO</name></column>
+				<references>
+					<ref_table_name>EMPLEADOS</ref_table_name>
+					<ref_constraint>XML_SYS_C0048904</ref_constraint>
+				</references>
+			</fk_members>
+		</constraint>
+		<constraint idcons="XML_SYS_C0048909">
+			<type>R</type>
+			<fk_members>
+				<column position="1"><name>DEPARTAMENTO</name></column>
+				<references>
+					<ref_table_name>DEPARTAMENTOS</ref_table_name>
+					<ref_constraint>XML_SYS_C0048900</ref_constraint>
+				</references>
+			</fk_members>
+		</constraint>
+	</table>
+
+	<table idtab="7">
+		<name>NUEVA_TABLA</name>
+		<column idcol="71">
+			<name>XML</name>
+			<data_type>CLOB</data_type>
+			<nullable>Y</nullable>
+		</column>
+	</table>
+
+	<table idtab="8">
+		<name>MAS_PRUEBAS</name>
+		<column idcol="81">
+			<name>PK</name>
+			<data_type>NUMBER</data_type>
+			<nullable>N</nullable>
+		</column>
+		<column idcol="82">
+			<name>A_OTRAS_PRUEBAS</name>
+			<data_type>NUMBER</data_type>
+			<nullable>Y</nullable>
+		</column>
+		<column idcol="83">
+			<name>OTRO_NOMBRE</name>
+			<data_type>VARCHAR2(20)</data_type>
+			<nullable>Y</nullable>
+		</column>
+		<constraint idcons="XML_SYS_C0051274">
+			<type>P</type>
+			<pk_members>
+				<column position="1"><name>PK</name></column>
+			</pk_members>
+		</constraint>
+		<constraint idcons="FK">
+			<type>R</type>
+			<fk_members>
+				<column position="1"><name>A_OTRAS_PRUEBAS</name></column>
+				<column position="2"><name>OTRO_NOMBRE</name></column>
+				<references>
+					<ref_table_name>OTRAS_PRUEBAS</ref_table_name>
+					<ref_constraint>PK_O</ref_constraint>
+				</references>
+			</fk_members>
+		</constraint>
+	</table>
+
+	<table idtab="9">
+		<name>OTRAS_PRUEBAS</name>
+		<column idcol="91">
+			<name>NUM</name>
+			<data_type>NUMBER</data_type>
+			<nullable>N</nullable>
+		</column>
+		<column idcol="92">
+			<name>NOMBRE</name>
+			<data_type>VARCHAR2(20)</data_type>
+			<nullable>N</nullable>
+		</column>
+		<constraint idcons="PK_O">
+			<type>P</type>
+			<pk_members>
+				<column position="1"><name>NUM</name></column>
+				<column position="2"><name>NOMBRE</name></column>
+			</pk_members>
+		</constraint>
+	</table>
+
+</db_schema>
