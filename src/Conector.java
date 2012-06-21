@@ -1,25 +1,25 @@
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.sql.*;
+import uma.ConnectionManager;
 
 public class Conector {
-    private String direccion;
-    private String usuario;
-    private String password;
-    private Connection conn;
-    
-    static {
+	ConnectionManager connManager;
+	Connection conn;
+	
+    public Conector() throws SQLException {
 		try {
-		    DriverManager.registerDriver(new oracle.jdbc.driver.OracleDriver());
-		} catch (SQLException ex) {
-		    throw new RuntimeException(ex);
+			connManager = new ConnectionManager();
+			conn = connManager.connect();
+			
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-    }
-    
-    public Conector(String direccion, String usuario, String password) throws SQLException {
-		this.direccion = direccion;
-		this.usuario = usuario;
-		this.password = password;
-		this.conn = DriverManager.getConnection(this.direccion,this.usuario,this.password);
     }
     
     public void execute(String s) throws SQLException {

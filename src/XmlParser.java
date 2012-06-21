@@ -34,9 +34,7 @@ public class XmlParser {
 		DocumentBuilder docBuilder =factory.newDocumentBuilder();
 		doc = docBuilder.parse(file);
 		doc.getDocumentElement().normalize();
-		conector = new Conector(
-				"jdbc:oracle:thin:@olimpia.lcc.uma.es:1521:edgar",
-				"LBD12_76638576", "4238");
+		conector = new Conector();
 	}
 
 	public void createDB() throws XPathExpressionException, SQLException {
