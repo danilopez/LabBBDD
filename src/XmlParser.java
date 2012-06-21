@@ -17,8 +17,17 @@ public class XmlParser {
 	private Document doc;
 
 	public XmlParser(File file) throws Exception {
-		DocumentBuilder docBuilder = DocumentBuilderFactory.newInstance()
-				.newDocumentBuilder();
+        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+        factory.setValidating(false);
+        factory.setNamespaceAware(true);
+
+        SchemaFactory schemaFactory = 
+            SchemaFactory.newInstance("http://www.w3.org/2001/XMLSchema");
+
+        factory.setSchema(schemaFactory.newSchema(
+            new Source[] {new StreamSource("dbtoxml.xsd")}));
+
+		DocumentBuilder docBuilder =factory.newDocumentBuilder();
 		doc = docBuilder.parse(file);
 		doc.getDocumentElement().normalize();
 		conector = new Conector(
