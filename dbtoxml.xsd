@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"> 
+    <xs:element name="db_schema" type="database_schema_type"/>
+
+    <xs:simpleType name="cons_type">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="C"/>
+            <xs:enumeration value="P"/>
+            <xs:enumeration value="R"/>
+            <xs:enumeration value="U"/>
+        </xs:restriction>
+    </xs:simpleType>
+    
+    <xs:simpleType name="nullable_type">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="Y"/>
+            <xs:enumeration value="N"/>
+        </xs:restriction>
+    </xs:simpleType>
+    
+    <xs:complexType name="cons_column">
+        <xs:sequence>
+            <xs:element name="name" type="xs:string"/>
+        </xs:sequence>
+        <xs:attribute name="position" type="xs:integer"></xs:attribute>
+    </xs:complexType>
+
+    <xs:complexType name="constraint_type">
+        <xs:sequence>
+            <xs:element name="type" type="cons_type"></xs:element>
+            <xs:choice> 
+                <xs:element name="search_condition" type="xs:string"/>
+                <xs:element name="pk_members" type="pk_cons"/>
+                <xs:element name="fk_members" type="fk_cons" />
+                <xs:element name="unique_members" type="unique_cons" />
+            </xs:choice>
+        </xs:sequence>
+        <xs:attribute name="idcons" type="xs:string" use="required"/>
+    </xs:complexType>
+
+    
+    <xs:complexType name="pk_cons">
+        <xs:sequence>
+            <xs:element name="column" type="cons_column" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+    
+    <xs:complexType name="unique_cons">
+        <xs:sequence>
+            <xs:element name="column" type="cons_column" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+    
+    <xs:complexType name="fk_cons">
+        <xs:sequence>
+            <xs:element name="column" type="cons_column" maxOccurs="unbounded"/>
+            <xs:element name="references" type="ref_type"/>
+        </xs:sequence>
+    </xs:complexType>
+    
+    <xs:complexType name="ref_type">
+        <xs:sequence>
+            <xs:element name="ref_table_name" type="xs:string"/>
+            <xs:element name="ref_constraint" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+    
+    <xs:complexType name="column_type">
+        <xs:sequence>
+            <xs:element name="name" type="xs:string"/>
+            <xs:element name="data_type" type="xs:string"/>
+            <xs:element name="nullable" type="nullable_type"></xs:element>
+        </xs:sequence>
+        <xs:attribute name="idcol" type="xs:string" use="required"/>
+    </xs:complexType>
+    
+    
+    
+    <xs:complexType name="table_type">
+        <xs:sequence>                
+            <xs:element name="name" type="xs:string"/>
+            <xs:element name="column" type="column_type" maxOccurs="unbounded"/>
+            <xs:element name="constraint" type="constraint_type" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+        <xs:attribute name="idtab" type="xs:string" use="required"/>
+    </xs:complexType>
+    
+    <xs:complexType name="database_schema_type">
+        <xs:sequence>
+            <xs:element name="table" type="table_type" maxOccurs="unbounded">
+                <xs:key name="col_name">
+                    <xs:selector xpath="./column"/>
+                    <xs:field xpath="name"/>
+                </xs:key>
+                <xs:keyref refer="col_name" name="cons_col_name">
+                    <xs:selector xpath="./constraint/*/column/name"></xs:selector>
+                    <xs:field xpath="."></xs:field>
+                </xs:keyref>
+                <xs:unique name="u_table_id">
+                    <xs:selector xpath="."/>
+                    <xs:field xpath="@idtab"/>
+                </xs:unique>
+                <xs:unique name="u_cons_id">
+                    <xs:selector xpath="."/>
+                    <xs:field xpath="@idcons"/>
+                </xs:unique>
+                <xs:unique name="u_table_name">
+                    <xs:selector xpath="."/>
+                    <xs:field xpath="name"/>
+                </xs:unique>
+                <xs:unique name="u_cons_name">
+                    <xs:selector xpath="./constraint"/>
+                    <xs:field xpath="name"/>
+                </xs:unique>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+</xs:schema>
